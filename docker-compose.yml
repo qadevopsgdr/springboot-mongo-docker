@@ -1,0 +1,35 @@
+#Author : DURGA RAO
+
+version: "3"
+
+services:
+  springapp:
+    image: ganidr/springmongoimg:v1.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - drnetwork
+    environment:
+      - MONGO_DB_HOSTNAME=mongodb
+      - MONGO_DB_USERNAME=devdb
+      - MONGO_DB_PASSWORD=dev@123
+
+  mongodb:
+    image: mongo:8.0.9-noble
+    networks:
+      - drnetwork
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=devdb
+      - MONGO_INITDB_ROOT_PASSWORD=dev@123
+    volumes:
+      - drvolume:/data/db
+
+networks:
+  drnetwork:
+    driver: bridge
+
+volumes:
+  drvolume:
+
